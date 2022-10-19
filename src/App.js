@@ -15,25 +15,21 @@ let list;
 function App() {
   let [CountryName, setCountryName] = useState("");
   let [Country, setCountry] = useState("");
-  let [error, setFetchError] = useState("");
   let API_URL = 'https://countriesnow.space/api/v0.1/countries';
-  let fetchItem = async () => {
+  const fetchItem = async () => {
     try {
       let response = await fetch(`${API_URL}`);
       if (!response.ok) throw Error("didn't receive data");
       let itemlist = await response.json();
       list = itemlist.data;
       setCountry(list);
-      setFetchError(null);
-      return list;
     }
     catch (err) {
-      setFetchError(err.message);
     }
   }
   useEffect(() => {
     (async () => await fetchItem())();
-  }, []);
+  },[]);
 
   useEffect(() => {
     let filterRequests = Country && (Country.filter(post => (((post.country.toLowerCase()).includes(CountryName)) || ((post.iso2).includes(CountryName)) || ((post.iso3).includes(CountryName)))));

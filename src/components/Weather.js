@@ -9,7 +9,9 @@ export default function Weather({ Country }) {
   let [latdata, setlatData] = useState("");
   let [londata, setlonData] = useState("");
   let [weather, setWeather] = useState("");
+  let obj={};
   let [error, setError] = useState("");
+  let [Obj, setObj] = useState("");
   let API_URL = 'https://api.openweathermap.org/geo/1.0/direct?q=';
   let API_URL1 = 'https://api.openweathermap.org/data/2.5/weather?lat=';
 
@@ -19,6 +21,9 @@ export default function Weather({ Country }) {
       console.log(`${API_URL}${cities}&limit=5&appid=786f9aadee727bff5098ae9ae657a075`)
       if (!response.ok) throw Error("didn't receive data");
       let itemlist = await response.json();
+      obj={name:itemlist[0].lat,value:itemlist[0].lon}
+      console.log("value::::",obj);
+      setObj(obj);
       setlatData(itemlist[0].lat);
       setlonData(itemlist[0].lon);
     }
@@ -32,7 +37,7 @@ export default function Weather({ Country }) {
       console.log(`${API_URL}${latdata}&lon=${londata}&appid=786f9aadee727bff5098ae9ae657a075`)
       if (!response2.ok) throw Error("didn't receive data");
       let itemlist1 = await response2.json();
-      console.log(itemlist1.main)
+      // console.log(itemlist1.main)
       setWeather(itemlist1);
     } catch (err) {
     }
@@ -42,7 +47,7 @@ export default function Weather({ Country }) {
   }, [cities]);
   useEffect(() => {
     (async () => await fetchItem2())();
-  }, [latdata, londata]);
+  }, [Obj]);
 
   let tempFunc = (temp) => {
     if (typeof temp === 'undefined') {
