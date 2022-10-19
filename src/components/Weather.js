@@ -43,10 +43,10 @@ export default function Weather({ Country }) {
     }
   }
   useEffect(() => {
-    (async () => await fetchItem())();
+    cities && (async () => await fetchItem())();
   }, [cities]);
   useEffect(() => {
-    (async () => await fetchItem2())();
+    Obj && (async () => await fetchItem2())();
   }, [Obj]);
 
   let tempFunc = (temp) => {
